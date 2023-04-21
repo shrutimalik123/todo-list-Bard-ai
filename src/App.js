@@ -25,41 +25,49 @@ const handleAddTodo = (text) => {
   setTodos([...todos, newTodo]);
 };
 
+const [selectedTaskId, setSelectedTaskId] = useState(null);
+
 const handleMarkTodoCompleted = (id) => {
-  setTodos(todos.map((todo) => {
-    if (todo.id === id) {
-      todo.completed = !todo.completed;
-    }
-    return todo;
-  }));
+  if (id === selectedTaskId) {
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    }));
+  }
 };
-;
+const handleSelectTodo = (id) => {
+  setSelectedTaskId(id);
+};
 
 return (
-<div>
-<h1>To-Do List</h1>
-<ul>
-{todos.map((todo) => (
-<li key={todo.id}>
-{todo.text}
-<button onClick={() => handleMarkTodoCompleted(todo.id)}>
-{todo.completed ? "Mark as Incomplete" : "Mark as Complete"}
-</button>
-</li>
-))}
-</ul>
-<input
-  type="text"
-  placeholder="Add a new todo"
-  onChange={(e) => handleAddTodo(e.target.value)}
-  onKeyPress={(e) => {
-    if (e.key === "Enter") {
-      handleAddTodo(e.target.value);
-      e.preventDefault();
-    }
-  }}
-/>
-</div>
+  <div>
+    <h1>To-Do List</h1>
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>
+          {todo.text}
+          <button
+            onClick={() => handleMarkTodoCompleted(todo.id)}
+          >
+            {todo.completed ? "Mark as Incomplete" : "Mark as Complete"}
+          </button>
+        </li>
+      ))}
+    </ul>
+    <input
+      type="text"
+      placeholder="Add a new todo"
+      onChange={(e) => handleAddTodo(e.target.value)}
+      onKeyPress={(e) => {
+        if (e.key === "Enter") {
+          handleAddTodo(e.target.value);
+          e.preventDefault();
+        }
+      }}
+    />
+  </div>
 );
 };
 
