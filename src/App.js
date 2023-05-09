@@ -1,5 +1,46 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+const AppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #2f3136;
+`;
+
+const TodoList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding: 0;
+  list-style-type: none;
+  width: 400px;
+`;
+
+const TodoItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #36393f;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  color: white;
+`;
+
+const TodoText = styled.span`
+  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+`;
+
+const TodoButton = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+`;
 
 const App = () => {
   const [todos, setTodos] = useState([
@@ -49,21 +90,44 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const text = event.target.elements.todo.value;
+    handleAddTodo(text);
+    event.target.reset();
+  };
+
   return (
     <div>
       <h1>Todo List</h1>
-      <form onSubmit={handleAddTodo}>
-        <input type="text" placeholder="Add a todo" />
-        <button type="submit">Add</button>
+      <form onSubmit={handleSubmit}
+>
+        <input type="text"
+         placeholder="Add a todo" 
+         name="todo"
+         style={{ padding: "10px", borderRadius: "5px", fontSize: "18px" }}/>
+        <button 
+        type="submit"
+        style={{
+          backgroundColor: "#7289DA",
+          color: "white",
+          padding: "10px",
+          borderRadius: "5px",
+          fontSize: "18px",
+          cursor: "pointer",
+        }}
+        >Add</button>
       </form>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
             {todo.text}
-            <button onClick={() => handleMarkTodoCompleted(todo.id)}>
+            <button 
+            onClick={() => handleMarkTodoCompleted(todo.id)}>
               {todo.completed ? "Uncheck" : "Check"}
             </button>
-            <button onClick={() => handleDeleteTodo(todo.id)}>
+            <button 
+            onClick={() => handleDeleteTodo(todo.id)}>
               Delete
             </button>
           </li>
@@ -82,3 +146,7 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
