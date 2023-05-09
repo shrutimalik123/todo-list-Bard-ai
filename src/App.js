@@ -18,55 +18,50 @@ completed: false,
 ]);
 
 const handleAddTodo = (text) => {
-  const newTodo = {
-    text,
-    completed: false,
-  };
-  setTodos([...todos, newTodo]);
+  setTodos([...todos, { text, completed: false }]);
 };
-
-const [selectedTaskId, setSelectedTaskId] = useState(null);
 
 const handleMarkTodoCompleted = (id) => {
-  if (id === selectedTaskId) {
-    setTodos(todos.map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    }));
-  }
+  setTodos(todos.map((todo) => {
+    if (todo.id === id) {
+      todo.completed = true;
+    }
+    return todo;
+  }));
 };
-const handleSelectTodo = (id) => {
-  setSelectedTaskId(id);
+
+const handleDeleteTodo = (id) => {
+  setTodos(todos.filter((todo) => todo.id !== id));
 };
 
 return (
   <div>
-    <h1>To-Do List</h1>
+    <h1>Todo List</h1>
+    <form onSubmit={handleAddTodo}>
+      <input type="text" placeholder="Add a todo" />
+      <button type="submit">Add</button>
+    </form>
     <ul>
       {todos.map((todo) => (
         <li key={todo.id}>
           {todo.text}
-          <button
-            onClick={() => handleMarkTodoCompleted(todo.id)}
-          >
-            {todo.completed ? "Mark as Incomplete" : "Mark as Complete"}
+          <button onClick={() => handleMarkTodoCompleted(todo.id)}>
+            {todo.completed ? "Uncheck" : "Check"}
+          </button>
+          <button onClick={() => handleDeleteTodo(todo.id)}>
+            Delete
           </button>
         </li>
       ))}
     </ul>
-    <input
-      type="text"
-      placeholder="Add a new todo"
-      onChange={(e) => handleAddTodo(e.target.value)}
-      onKeyPress={(e) => {
-        if (e.key === "Enter") {
-          handleAddTodo(e.target.value);
-          e.preventDefault();
-        }
-      }}
-    />
+    <h2>Completed Todos</h2>
+    <ul>
+      {todos.filter((todo) => todo.completed).map((todo) => (
+        <li key={todo.id}>
+          {todo.text}
+        </li>
+      ))}
+    </ul>
   </div>
 );
 };
