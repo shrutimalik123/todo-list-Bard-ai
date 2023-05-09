@@ -123,11 +123,33 @@ const App = () => {
           <li key={todo.id}>
             {todo.text}
             <button 
-            onClick={() => handleMarkTodoCompleted(todo.id)}>
+            onClick={() => handleMarkTodoCompleted(todo.id)}
+            style={{
+              float: "right",
+              backgroundColor: "#7289DA",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              fontSize: "18px",
+              cursor: "pointer",
+            }}
+            
+            >
               {todo.completed ? "Uncheck" : "Check"}
             </button>
             <button 
-            onClick={() => handleDeleteTodo(todo.id)}>
+            onClick={() => handleDeleteTodo(todo.id)}
+            style={{
+              float: "right",
+              backgroundColor: "#7289DA",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              fontSize: "18px",
+              cursor: "pointer",
+            }}
+            
+            >
               Delete
             </button>
           </li>
